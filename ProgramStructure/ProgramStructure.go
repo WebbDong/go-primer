@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	//ifAndSwitch()
-	for_()
+	ifAndSwitch()
+	//for_()
 }
 
 func ifAndSwitch() {
@@ -55,6 +55,20 @@ func ifAndSwitch() {
 		fmt.Println("D")
 	default:
 		fmt.Println("E")
+	}
+
+	// fallthrough不能写在default分支里
+	fmt.Println("输入年龄：")
+	fmt.Scan(&age)
+	switch {
+	case age >= 90:
+		fallthrough
+	case age >= 60:
+		fmt.Println("老东西")
+	case age >= 40:
+		fmt.Println("中年人")
+	default:
+		fmt.Println("青年人")
 	}
 }
 
