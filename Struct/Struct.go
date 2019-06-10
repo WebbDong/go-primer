@@ -5,7 +5,7 @@ import (
 )
 
 // 结构体
-// Go语言结构体不允许有函数
+// Go语言结构体中不允许直接定义函数
 func main() {
 	//structInit()
 	//structArray()
