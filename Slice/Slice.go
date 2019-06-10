@@ -22,7 +22,8 @@ func main() {
 	//appendFunc()
 	//copyFunc()
 	//sliceParam()
-	sliceParamAppend()
+	//sliceParamAppend()
+	removeSliceElement()
 }
 
 // 切片创建
@@ -271,4 +272,37 @@ func sliceParamTest2(s []int) {
 	fmt.Printf("newSlice:%p\n", &newSlice)
 	fmt.Println("sliceParamTest2:", newSlice)
 	s = newSlice
+}
+
+// 删除切片的元素
+func removeSliceElement() {
+	s1 := []int{1, 2, 3, 4, 5}
+	// 根据角标删除元素
+	// 删除角标为2的元素
+	index := 2
+	// 以删除的元素为分界点，将截取的2个切片相连
+	s1 = append(s1[:index], s1[index+1:]...)
+	fmt.Println(s1)
+	fmt.Println("-----------------------------------")
+
+	s2 := []int{10, 20, 30, 40, 50}
+	// 使用这种方式原s2切片的数据被篡改
+	res1 := append(s2[:index], s2[index+1:]...)
+	fmt.Println("s2 =", s2)
+	fmt.Println("res1 =", res1)
+	fmt.Println("-----------------------------------")
+
+	s3 := []int{100, 200, 300, 400, 500}
+	res2 := append(s3[:index:index], s3[index+1:]...)
+	fmt.Println("s3 =", s3)
+	fmt.Println("res2 =", res2)
+	fmt.Println("-----------------------------------")
+
+	s4 := []string{"Ferrari", "Lamborghini", "Pagani", "Bugatti", "Toyota"}
+	temp := make([]string, len(s4[:index]))
+	r := copy(temp, s4[:index])
+	res3 := append(temp, s4[index+1:]...)
+	fmt.Println("r =", r)
+	fmt.Println("s4 =", s4)
+	fmt.Println("res3 =", res3)
 }
