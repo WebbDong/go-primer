@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// 面向对象，类，对象，继承
 func main() {
 	//oo()
 	//extends()
@@ -10,7 +11,10 @@ func main() {
 	//nestExtends()
 	//multipleExtends()
 	//memberMethod()
-	methodExtends()
+	//methodExtends()
+	//methodOverride()
+	//methodValueAndExpression()
+	test()
 }
 
 // GO语言使用结构体定义类
@@ -207,4 +211,75 @@ type Tiger struct {
 func methodExtends() {
 	t1 := Tiger{Animal{100, 20, 2}}
 	t1.eat()
+}
+
+type Parent struct {
+}
+
+func (p *Parent) PrintInfo() {
+	fmt.Println("父类")
+}
+
+type Sub struct {
+	Parent
+}
+
+func (s *Sub) PrintInfo() {
+	fmt.Println("子类")
+}
+
+// 9、方法重写
+func methodOverride() {
+	s1 := Sub{}
+	// 调用的是子类的
+	s1.PrintInfo()
+	// 如果要调用父类的，需要显示指定父类名
+	s1.Parent.PrintInfo()
+}
+
+type Airplane struct {
+	speed int
+}
+
+func (a *Airplane) fly() {
+	fmt.Println(*a)
+}
+
+func (a Airplane) landing() {
+	fmt.Println(a)
+}
+
+// 10、方法值与方法表达式
+func methodValueAndExpression() {
+	a1 := Airplane{700}
+	// 方法值，将方法赋值给变量
+	m1 := a1.fly
+	// 调用
+	m1()
+	fmt.Printf("m1 = %T\n", m1)
+	fmt.Println("----------------------------")
+
+	// 方法表达式
+	m2 := (*Airplane).fly
+	m2(&a1)
+	fmt.Printf("m2 = %T\n", m2)
+	fmt.Println("----------------------------")
+
+	m3 := Airplane.landing
+	m3(a1)
+	fmt.Printf("m3 = %T\n", m3)
+}
+
+// 为int类型取一个别名
+type Int int
+
+// 为Int类型添加方法
+func (self Int) add(b Int) Int {
+	return self + b
+}
+
+// 11、为go语言基本数据类型添加自定义方法
+func test() {
+	var num Int = 200
+	fmt.Println(num.add(20))
 }
