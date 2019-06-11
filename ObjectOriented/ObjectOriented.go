@@ -9,7 +9,8 @@ func main() {
 	//pointerExtends()
 	//nestExtends()
 	//multipleExtends()
-	memberFunc()
+	//memberMethod()
+	methodExtends()
 }
 
 // GO语言使用结构体定义类
@@ -19,7 +20,7 @@ type Car struct {
 	topSpeed   int
 }
 
-// 面向对象
+// 1、面向对象
 func oo() {
 	var c1 = Car{800, "Ferrari", 350}
 	c2 := Car{horsepower: 1500, brand: "bugatti", topSpeed: 420}
@@ -44,7 +45,7 @@ type Teacher struct {
 	salary float64
 }
 
-// 继承
+// 2、继承
 func extends() {
 	var s1 = Student{Person{"哈登", 30}, 96}
 	var s2 = Student{score: 70}
@@ -57,7 +58,7 @@ func extends() {
 	fmt.Println(t1)
 }
 
-// 成员操作
+// 3、成员操作
 func memberOperate() {
 	s1 := Student{Person{"科比", 39}, 100}
 	fmt.Println(s1)
@@ -72,7 +73,7 @@ func memberOperate() {
 	fmt.Println(s1)
 }
 
-// 指针类型匿名字段继承
+// 4、指针类型匿名字段继承
 func pointerExtends() {
 	type Driver struct {
 		// 指针类型匿名字段，实现继承
@@ -98,7 +99,7 @@ func pointerExtends() {
 	fmt.Println("d1.drivingYears =", d1.drivingYears)
 }
 
-// 多重继承
+// 5、多重继承
 func nestExtends() {
 	type Vehicle struct {
 		topSpeed   int
@@ -125,7 +126,7 @@ func nestExtends() {
 	fmt.Println("v2.topSpeed =", v2.topSpeed)
 }
 
-// 多继承
+// 6、多继承
 func multipleExtends() {
 	type Children struct {
 		name string
@@ -160,8 +161,50 @@ func (c Computer) run() {
 	fmt.Println(c.gpu)
 }
 
-// 结构体或类的成员方法
-func memberFunc() {
+func (c Computer) add(num1 int, num2 int) int {
+	return num1 + num2
+}
+
+func (c Computer) setRam(ram int) {
+	// 不使用指针无法修改
+	c.ram = ram
+}
+
+func (c *Computer) setRam2(ram int) {
+	// 使用指针才能修改
+	c.ram = ram
+}
+
+// 7、结构体(类)的成员方法
+func memberMethod() {
 	c1 := Computer{10, 8, 1024}
 	c1.run()
+	fmt.Println("c1.add(10, 30) =", c1.add(10, 30))
+	c1.setRam(200)
+	fmt.Println(c1)
+	c1.setRam2(5000)
+	fmt.Println(c1)
+	// 与c1.setRam2(5000)写法等价
+	(&c1).setRam2(6000)
+	fmt.Println(c1)
+}
+
+type Animal struct {
+	weight int
+	age    int
+	height int
+}
+
+func (a *Animal) eat() {
+	fmt.Println("eat")
+}
+
+type Tiger struct {
+	Animal
+}
+
+// 8、方法继承
+func methodExtends() {
+	t1 := Tiger{Animal{100, 20, 2}}
+	t1.eat()
 }
