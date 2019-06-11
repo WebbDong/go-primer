@@ -1,13 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // 面向对象，接口，多态
 func main() {
 	//interfaces()
 	//polymorphis()
 	//interfaceExtends()
-	emptyInterface()
+	//emptyInterface()
+	typeAssert()
 }
 
 // 接口
@@ -143,4 +146,38 @@ func emptyInterface() {
 	s1 = append(s1, 1, 2, 3)
 	s1 = append(s1, 5, "ferrari", 38.5, &Bike{})
 	fmt.Println(s1)
+}
+
+// 5、类型断言
+func typeAssert() {
+	var i interface{}
+	i = 100
+
+	// 判断空接口变量是否是指定的数据类型，如果判断成功，ok为true，并且value为数据值，否则ok为false，
+	value, ok := i.(int)
+	if ok {
+		fmt.Println(value)
+	} else {
+		fmt.Println("类型错误")
+		fmt.Println(value)
+	}
+	fmt.Println("-------------------")
+
+	i = Bike{}
+	value2, ok2 := i.(Bike)
+	if ok2 {
+		fmt.Println(value2)
+	} else {
+		fmt.Println("类型错误")
+		fmt.Println(value2)
+	}
+
+	i = &Bike{}
+	value3, ok3 := i.(*Bike)
+	if ok3 {
+		fmt.Println(value3)
+	} else {
+		fmt.Println("类型错误")
+		fmt.Println(value3)
+	}
 }
