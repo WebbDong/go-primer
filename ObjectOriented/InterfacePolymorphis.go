@@ -5,7 +5,9 @@ import "fmt"
 // 面向对象，接口，多态
 func main() {
 	//interfaces()
-	polymorphis()
+	//polymorphis()
+	//interfaceExtends()
+	emptyInterface()
 }
 
 // 接口
@@ -76,4 +78,69 @@ func polymorphis() {
 	polymorphisTest(per)
 	rd2 := RacingDriver{Human{name: "科比", age: 30}, 400}
 	polymorphisTest(&rd2)
+}
+
+type Interface1 interface {
+	Walk()
+}
+
+type Interface2 interface {
+	Interface1
+	Eat()
+}
+
+type Class1 struct {
+}
+
+func (c *Class1) Walk() {
+	fmt.Println("Walk...")
+}
+
+func (c *Class1) Eat() {
+	fmt.Println("Eat...")
+}
+
+// 3、接口继承
+func interfaceExtends() {
+	c1 := Class1{}
+
+	var i1 Interface1 = &c1
+	var i2 Interface2 = &c1
+
+	i1.Walk()
+	i2.Walk()
+	i2.Eat()
+
+	i1 = i2
+	i1.Walk()
+}
+
+type Bike struct {
+	speed int
+}
+
+func (b *Bike) ride() {
+	fmt.Println("ride...")
+}
+
+// 4、空接口(interface{})，不包含任何方法的接口，所有类型都实现了空接口，所以空接口可以存储任意类型的值
+func emptyInterface() {
+	var ei1 interface{}
+	ei1 = "ferrari"
+	fmt.Println(ei1)
+	ei1 = 100
+	fmt.Println(ei1)
+
+	ei1 = Bike{30}
+	fmt.Println(ei1)
+
+	ei1 = &Bike{40}
+	fmt.Println(ei1)
+	fmt.Println("---------------")
+
+	// 空接口类型切片，可以添加任意类型的数据
+	var s1 []interface{}
+	s1 = append(s1, 1, 2, 3)
+	s1 = append(s1, 5, "ferrari", 38.5, &Bike{})
+	fmt.Println(s1)
 }
