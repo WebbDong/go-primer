@@ -180,4 +180,37 @@ func typeAssert() {
 		fmt.Println("类型错误")
 		fmt.Println(value3)
 	}
+
+	// switch判断
+	switch i.(type) {
+	case int:
+		fmt.Println("int类型")
+	case string:
+		fmt.Println("string类型")
+	case float64:
+		fmt.Println("float64类型")
+	case *Bike:
+		fmt.Println("*Bike类型")
+	case Bike:
+		fmt.Println("Bike类型")
+	default:
+		fmt.Println("类型错误")
+	}
+
+	i = 200
+	// v是获取的值
+	switch v := i.(type) {
+	case int:
+		fmt.Println("int类型，", v)
+	case string:
+		fmt.Println("string类型，", v)
+	case float64:
+		fmt.Println("float64类型，", v)
+	case *Bike:
+		fmt.Println("*Bike类型，", v)
+	case Bike:
+		fmt.Println("Bike类型，", v)
+	default:
+		fmt.Println("类型错误，", v)
+	}
 }
