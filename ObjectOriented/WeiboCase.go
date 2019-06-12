@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 	"time"
 )
 
@@ -69,7 +68,12 @@ func (b *Blogger) UnFollow(fan FansInterface) {
 }
 
 func (b *Blogger) AddComment(weiboId int, newComment Comment) {
-	if reflect.ValueOf(b.commentsMap).IsNil() {
+	/*
+		if reflect.ValueOf(b.commentsMap).IsNil() {
+			b.commentsMap = map[int][]*Comment{}
+		}
+	*/
+	if b.commentsMap == nil {
 		b.commentsMap = map[int][]*Comment{}
 	}
 	comments := b.commentsMap[weiboId]
