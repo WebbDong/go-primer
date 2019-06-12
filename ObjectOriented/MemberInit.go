@@ -15,7 +15,10 @@ type ClassA struct {
 	array    [10]int
 	classB   ClassB
 	objArray [10]ClassB
-	slice    []int
+	// 默认值为nil
+	slice []int
+	// 默认值为nil
+	map1 map[int]int
 }
 
 type ClassB struct {
