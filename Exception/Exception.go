@@ -52,7 +52,15 @@ func errorInterface() {
 	}
 }
 
-// 3、recover函数
-func recoverFunc() {
+func testRecover() {
+	fmt.Println(recover())
+}
 
+// 3、recover函数
+// recover函数只有在使用defer调用的函数中才有效
+func recoverFunc() {
+	defer testRecover()
+	recover()
+	panicFunc()
+	fmt.Println("done...")
 }
