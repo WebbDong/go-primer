@@ -14,7 +14,8 @@ func main() {
 	//repeat()
 	//replace()
 	//split()
-	stringConvert()
+	//stringConvert()
+	substring()
 }
 
 // 1、Contains方法，判断第一个参数的字符串是否包含第二个参数的字符串
@@ -112,4 +113,13 @@ func stringConvert() {
 		fmt.Println("转换失败", err)
 	}
 	fmt.Println(f)
+}
+
+// 8、截取子串
+func substring() {
+	str1 := "Lamborghini"
+	fmt.Println(str1[1: 5])
+
+	str2 := "img\\abc.jpg"
+	fmt.Println(str2[0:strings.LastIndex(str2, "\\")])
 }

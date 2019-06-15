@@ -4,20 +4,39 @@ import (
 	"fmt"
 	"github.com/lxn/walk"
 	. "github.com/lxn/walk/declarative"
+	"service"
 )
 
 // 主窗口
 type CompressMainWindow struct {
 	*walk.MainWindow
+	// 左边文件选择区域
 	fileChooseComposite *FileChooseComposite
+	// 右边操作按钮区域
 	operateBtnComposite *OperateButtonComposite
+
+	compressService service.CompressServicer
 }
 
 func (c *CompressMainWindow) Show() {
 	fileChooseComposite, fcComposite := CreateFileChooseComposite()
 	c.fileChooseComposite = fileChooseComposite
-
-	operateBtnComposite, obComposite := CreateOperateButtonComposite()
+	c.compressService = &service.CompressService{}
+	operateBtnComposite, obComposite := CreateOperateButtonComposite(
+		// 开始解压按钮点击
+		func() {
+			isSuccess := c.compressService.Decompress(fileChooseComposite.decompressPath, fileChooseComposite.decompressSavePath)
+			if isSuccess {
+				fileChooseComposite.statusLabel.SetText("解压成功")
+			} else {
+				fileChooseComposite.statusLabel.SetText("解压失败")
+			}
+		},
+		// 开始压缩按钮点击
+		func() {
+			c.compressService.Compress(fileChooseComposite.compressPath, fileChooseComposite.compressSavePath)
+		},
+	)
 	c.operateBtnComposite = operateBtnComposite
 
 	windowSize := Size{600, 400}

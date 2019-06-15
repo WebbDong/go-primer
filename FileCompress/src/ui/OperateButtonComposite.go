@@ -11,7 +11,7 @@ type OperateButtonComposite struct {
 	startCompressBtn   *walk.PushButton
 }
 
-func CreateOperateButtonComposite() (*OperateButtonComposite, Composite) {
+func CreateOperateButtonComposite(onStartDecompressButtonClick func(), onStartCompressButtonClick func()) (*OperateButtonComposite, Composite) {
 	obComposite := OperateButtonComposite{}
 	composite := Composite{
 		AssignTo: &obComposite.Composite,
@@ -20,10 +20,16 @@ func CreateOperateButtonComposite() (*OperateButtonComposite, Composite) {
 			PushButton{
 				AssignTo: &obComposite.startDecompressBtn,
 				Text:     "开始解压",
+				OnClicked: func() {
+					onStartDecompressButtonClick()
+				},
 			},
 			PushButton{
 				AssignTo: &obComposite.startCompressBtn,
 				Text:     "开始压缩",
+				OnClicked: func() {
+					onStartCompressButtonClick()
+				},
 			},
 		},
 	}

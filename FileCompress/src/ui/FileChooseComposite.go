@@ -24,6 +24,8 @@ type FileChooseComposite struct {
 	selectCompressPathBtn *walk.PushButton
 	// 选择压缩后文件保存路径按钮
 	selectCompressSavePathBtn *walk.PushButton
+	// 状态标签
+	statusLabel *walk.Label
 
 	decompressPath     string
 	decompressSavePath string
@@ -41,6 +43,7 @@ func CreateFileChooseComposite() (*FileChooseComposite, Composite) {
 		Children: []Widget{
 			LineEdit{
 				AssignTo: &fcComposite.decompressPathLineEdit,
+				Enabled:  false,
 			},
 			PushButton{
 				AssignTo: &fcComposite.selectDecompressPathBtn,
@@ -55,6 +58,9 @@ func CreateFileChooseComposite() (*FileChooseComposite, Composite) {
 			},
 			LineEdit{
 				AssignTo: &fcComposite.decompressSavePathLineEdit,
+				OnEditingFinished: func() {
+					fcComposite.decompressSavePath = fcComposite.decompressSavePathLineEdit.Text()
+				},
 			},
 			PushButton{
 				AssignTo: &fcComposite.selectDecompressSavePathBtn,
@@ -69,6 +75,7 @@ func CreateFileChooseComposite() (*FileChooseComposite, Composite) {
 			},
 			LineEdit{
 				AssignTo: &fcComposite.compressPathLineEdit,
+				Enabled:  false,
 			},
 			PushButton{
 				AssignTo: &fcComposite.selectCompressPathBtn,
@@ -83,6 +90,9 @@ func CreateFileChooseComposite() (*FileChooseComposite, Composite) {
 			},
 			LineEdit{
 				AssignTo: &fcComposite.compressSavePathLineEdit,
+				OnEditingFinished: func() {
+					fcComposite.compressSavePath = fcComposite.compressSavePathLineEdit.Text()
+				},
 			},
 			PushButton{
 				AssignTo: &fcComposite.selectCompressSavePathBtn,
@@ -94,6 +104,10 @@ func CreateFileChooseComposite() (*FileChooseComposite, Composite) {
 						fcComposite.compressSavePath = path
 					}
 				},
+			},
+			Label{
+				AssignTo: &fcComposite.statusLabel,
+				Text:     "压缩成功",
 			},
 		},
 	}
