@@ -109,6 +109,7 @@ func (c *CompressService) Compress(compressPath string, compressSavePath string)
 		return false
 	}
 	defer file.Close()
+	// 获取文件信息
 	info, err := file.Stat()
 	if err != nil {
 		fmt.Println(err)
@@ -119,5 +120,13 @@ func (c *CompressService) Compress(compressPath string, compressSavePath string)
 		fmt.Println(err)
 		return false
 	}
+	writer := zip2.NewWriter(compressFile)
+	defer writer.Close()
+	w, err := writer.CreateHeader(fileHeader)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	io.Copy(w, file)
 	return true
 }

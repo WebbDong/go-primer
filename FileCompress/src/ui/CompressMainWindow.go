@@ -34,7 +34,12 @@ func (c *CompressMainWindow) Show() {
 		},
 		// 开始压缩按钮点击
 		func() {
-			c.compressService.Compress(fileChooseComposite.compressPath, fileChooseComposite.compressSavePath)
+			isSuccess := c.compressService.Compress(fileChooseComposite.compressPath, fileChooseComposite.compressSavePath)
+			if isSuccess {
+				fileChooseComposite.statusLabel.SetText("压缩成功")
+			} else {
+				fileChooseComposite.statusLabel.SetText("压缩成功")
+			}
 		},
 	)
 	c.operateBtnComposite = operateBtnComposite
