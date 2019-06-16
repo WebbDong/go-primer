@@ -107,7 +107,6 @@ func CreateFileChooseComposite() (*FileChooseComposite, Composite) {
 			},
 			Label{
 				AssignTo: &fcComposite.statusLabel,
-				Text:     "压缩成功",
 			},
 		},
 	}

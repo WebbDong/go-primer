@@ -1,11 +1,13 @@
 package service
 
 import (
+	zip2 "archive/zip"
 	"fmt"
 	"github.com/gpmgo/gopm/modules/cae/zip"
 	"io"
 	"os"
 	"strings"
+	"utils"
 )
 
 type CompressServicer interface {
@@ -41,7 +43,14 @@ func (c *CompressService) Decompress(decompressPath string, decompressSavePath s
 		if strings.Contains(f.Name, "/") {
 			path := decompressSavePath + f.Name[0:strings.LastIndex(f.Name, "/")]
 			if path != "" {
-				err := os.MkdirAll(path, os.ModePerm)
+				// GO中汉字采用的是UTF-8编码，而Windows中采用的是GBK，需要进行转换。
+				// 处理中文乱码
+				newPath, err := utils.UTF8ToGBK(path)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				err = os.MkdirAll(newPath, os.ModePerm)
 				if err != nil {
 					fmt.Println(err)
 					continue
@@ -50,6 +59,11 @@ func (c *CompressService) Decompress(decompressPath string, decompressSavePath s
 		}
 
 		newFilePath := decompressSavePath + "\\" + f.Name
+		newFilePath, err = utils.UTF8ToGBK(newFilePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 		newFile, err := os.Create(newFilePath)
 		defer newFile.Close()
 		if err != nil {
@@ -83,5 +97,27 @@ func (c *CompressService) Decompress(decompressPath string, decompressSavePath s
 }
 
 func (c *CompressService) Compress(compressPath string, compressSavePath string) bool {
-	return false
+	compressFile, err := os.Create(compressSavePath)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	defer compressFile.Close()
+	file, err := os.Open(compressPath)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	defer file.Close()
+	info, err := file.Stat()
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	fileHeader, err := zip2.FileInfoHeader(info)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
 }
