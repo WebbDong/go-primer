@@ -21,6 +21,9 @@ type CompressService struct {
 }
 
 func (c *CompressService) Decompress(decompressPath string, decompressSavePath string) bool {
+	if decompressPath == "" || decompressSavePath == "" {
+		return false
+	}
 	archive, err := zip.OpenFile(decompressPath, os.O_RDONLY, 4)
 	defer archive.Close()
 	if err != nil {
@@ -97,6 +100,9 @@ func (c *CompressService) Decompress(decompressPath string, decompressSavePath s
 }
 
 func (c *CompressService) Compress(compressPath string, compressSavePath string) bool {
+	if compressPath == "" || compressSavePath == "" {
+		return false
+	}
 	compressFile, err := os.Create(compressSavePath)
 	if err != nil {
 		fmt.Println(err)

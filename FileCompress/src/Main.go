@@ -2,7 +2,6 @@ package main
 
 import (
 	"ui"
-	_ "ui"
 )
 
 func main() {

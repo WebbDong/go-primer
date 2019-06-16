@@ -38,7 +38,7 @@ func (c *CompressMainWindow) Show() {
 			if isSuccess {
 				fileChooseComposite.statusLabel.SetText("压缩成功")
 			} else {
-				fileChooseComposite.statusLabel.SetText("压缩成功")
+				fileChooseComposite.statusLabel.SetText("压缩失败")
 			}
 		},
 	)
