@@ -15,6 +15,15 @@ func ifAndSwitch() {
 
 	}
 
+	// 可以初始化一个变量，作用域只在if-else语句中
+	if i := 30; age == 40 {
+		fmt.Println(i)
+	} else if j := 40; age == 50 {
+		fmt.Println(i, j)
+	} else {
+		fmt.Println(i)
+	}
+
 	switch age {
 	case 10:
 		fmt.Println("10")
@@ -69,6 +78,39 @@ func ifAndSwitch() {
 		fmt.Println("中年人")
 	default:
 		fmt.Println("青年人")
+	}
+
+	// 可以初始化一个变量，作用域只在switch语句中
+	switch i := 50; {
+	case age >= 90:
+		fallthrough
+	case age >= 60:
+		fmt.Println("老东西")
+	case age >= 40:
+		fmt.Println("中年人")
+		fmt.Println(i)
+	default:
+		fmt.Println("青年人")
+	}
+
+	switch j := 50; age {
+	case 10:
+		fmt.Println("10")
+		fmt.Println(j)
+	case 20:
+		fmt.Println("20")
+	case 30:
+		fmt.Println("30")
+	case 40:
+		fmt.Println("40")
+	default:
+		fmt.Println("default")
+	}
+
+	switch j := 100; age > 50 {
+	case true:
+		fmt.Println(j)
+	case false:
 	}
 }
 
