@@ -112,8 +112,13 @@ func twoDimensionalArray() {
 // 数组截取，同切片
 func arrayCutOut() {
 	arr5 := [6]int{1, 3, 5, 6, 90, 20}
-	arr := arr5[1:2:3]
-	fmt.Println(arr)
-	fmt.Println(len(arr))
-	fmt.Println(cap(arr))
+	// 数组截取出来的是切片
+	s1 := arr5[1:2:3]
+	fmt.Println(s1)
+	fmt.Println(len(s1))
+	fmt.Println(cap(s1))
+	s1 = append(s1, 100, 1000)
+	fmt.Println(s1)
+	fmt.Println(len(s1))
+	fmt.Println(cap(s1))
 }
