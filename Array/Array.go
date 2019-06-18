@@ -48,6 +48,7 @@ func array() {
 	param()
 	arrCompare()
 	twoDimensionalArray()
+	arrayCutOut()
 }
 
 // 数组作为函数参数
@@ -56,6 +57,7 @@ func param() {
 	test1(arr1)
 	// GO中数组是值传递，在其他函数中修改传入的数组，不会影响原来的数组
 	fmt.Println("arr1[0] =", arr1[0])
+	fmt.Println("-----------------------------")
 }
 
 func test1(arr [10]int) {
@@ -70,6 +72,7 @@ func arrCompare() {
 	arr3 := [...]int{1, 1, 2, 3, 4}
 	fmt.Printf("arr1 == arr2: %t\n", arr1 == arr2)
 	fmt.Println("arr1 != num3:", arr1 != arr3)
+	fmt.Println("-----------------------------")
 }
 
 // 二维数组
@@ -103,4 +106,14 @@ func twoDimensionalArray() {
 		{6, 7, 8},
 	}
 	fmt.Println(arr2)
+	fmt.Println("-----------------------------")
+}
+
+// 数组截取，同切片
+func arrayCutOut() {
+	arr5 := [6]int{1, 3, 5, 6, 90, 20}
+	arr := arr5[1:2:3]
+	fmt.Println(arr)
+	fmt.Println(len(arr))
+	fmt.Println(cap(arr))
 }

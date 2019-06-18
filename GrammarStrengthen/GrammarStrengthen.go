@@ -5,6 +5,7 @@ import "fmt"
 // GO语法加强
 func main() {
 	pointerStrengthen()
+	sliceStrengthen()
 }
 
 // 1、指针加强
@@ -33,4 +34,15 @@ func test2() *int {
 	// go语言编译器会自动决定把一个变量放在栈还是放在堆，编译器会做逃逸分析(escape analysis)，
 	// 当发现变量的作用域没有跑出函数范围，就可以在栈上，反之则必须分配在堆。
 	return &num
+}
+
+// 2、切片加强
+func sliceStrengthen() {
+	/*
+		为什么用切片：
+			1、数组的容量固定，不能自动扩展
+			2、数组值传递。数组作为函数参数时，是将整个数组拷贝一份给形参
+		切片的本质：
+			1、不是一个数组指针，是一种数据结构体。
+	*/
 }
