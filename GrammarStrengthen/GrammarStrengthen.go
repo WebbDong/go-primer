@@ -4,7 +4,7 @@ import "fmt"
 
 // GO语法加强
 func main() {
-	pointerStrengthen()
+	//pointerStrengthen()
 	sliceStrengthen()
 }
 
@@ -45,4 +45,16 @@ func sliceStrengthen() {
 		切片的本质：
 			1、不是一个数组指针，是一种数据结构体。
 	*/
+
+	// 练习，去除空字符串
+	strs := []string{"red", "", "black", "", "", "pink", "blue"}
+	i := 0
+	for _, v := range strs {
+		if v != "" {
+			strs[i] = v
+			i++
+		}
+	}
+	strs = strs[:i]
+	fmt.Println(strs)
 }
