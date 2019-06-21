@@ -57,4 +57,24 @@ func sliceStrengthen() {
 	}
 	strs = strs[:i]
 	fmt.Println(strs)
+	fmt.Println("--------------------------------")
+
+	// 联系，去重
+	str2 := []string{"red", "black", "red", "pink", "blue", "red", "pink", "blue"}
+	newStr := make([]string, 0, 10)
+	var isExists bool
+	for _, v := range str2 {
+		isExists = false
+		for i, len := 0, len(newStr); i < len; i++ {
+			if v == newStr[i] {
+				isExists = true
+				break
+			}
+		}
+		if !isExists {
+			newStr = append(newStr, v)
+		}
+	}
+	fmt.Println(newStr)
+	fmt.Println(len(newStr))
 }
