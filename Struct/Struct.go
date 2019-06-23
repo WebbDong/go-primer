@@ -12,7 +12,8 @@ func main() {
 	//structSlice()
 	//structMap()
 	//structParam()
-	structScan()
+	//structScan()
+	structCompare()
 }
 
 // 结构体创建与初始化
@@ -119,4 +120,13 @@ func structScan() {
 	fmt.Println("输入数据：")
 	fmt.Scan(&c1.horsepower, &c1.brand, &c1.topSpeed)
 	fmt.Println(c1)
+}
+
+// 结构体比较
+func structCompare() {
+	c1 := Car{650, "Lamborghini", 350}
+	c2 := Car{650, "Lamborghini", 350}
+	c3 := Car{651, "Lamborghini", 350}
+	fmt.Println("c1 == c2 ", c1 == c2)
+	fmt.Println("c1 == c3 ", c1 == c3)
 }
