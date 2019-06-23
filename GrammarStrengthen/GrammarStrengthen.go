@@ -5,7 +5,8 @@ import "fmt"
 // GO语法加强
 func main() {
 	//pointerStrengthen()
-	sliceStrengthen()
+	//sliceStrengthen()
+	mapStrengthen()
 }
 
 // 1、指针加强
@@ -77,4 +78,31 @@ func sliceStrengthen() {
 	}
 	fmt.Println(newStr)
 	fmt.Println(len(newStr))
+}
+
+// 3、Map加强
+func mapStrengthen() {
+	// 只是声明了变量，map1为nil，没有初始化
+	var map1 map[int]string
+	fmt.Println(map1 == nil)
+
+	map2 := map[int]string{}
+	fmt.Println(map2 == nil)
+
+	map3 := make(map[int]string)
+	fmt.Println(map3 == nil)
+
+	map4 := make(map[int]string, 5)
+	map4[100] = "Lamborghini"
+	map4[50] = "Ferrari"
+	map4[10] = "Pagani"
+	map4[5] = "BMW"
+	map4[2] = "BENZ"
+	map4[0] = "TOYOTA"
+	// 判断key是否存在
+	if v, exists := map4[0]; exists {
+		fmt.Println("v =", v)
+	} else {
+		fmt.Println("不存在")
+	}
 }

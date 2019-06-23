@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Map的Key不能是引用类型
 func main() {
 	//mapInit()
 	//mapKeyAndValue()
