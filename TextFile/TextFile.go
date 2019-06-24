@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -15,7 +16,11 @@ func main() {
 	//writeAtFunc()
 	//seekFunc()
 	//appendDataToFile()
-	readFile()
+	//readFile()
+	//readLine()
+	//readLine2()
+	//readDir()
+	readDirRecursion("D:\\logo")
 }
 
 // 1、文件创建
@@ -183,5 +188,86 @@ func readFile() {
 			break
 		}
 		fmt.Print(string(b))
+	}
+}
+
+// 8、读取行
+func readLine() {
+	file, err := os.OpenFile("D:\\a.txt", os.O_RDONLY, os.ModePerm)
+	defer file.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 创建一个带有缓冲区的Reader
+	reader := bufio.NewReader(file)
+	for {
+		bytes, err := reader.ReadBytes('\n')
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Print(string(bytes))
+	}
+}
+
+func readLine2() {
+	file, err := os.OpenFile("D:\\a.txt", os.O_RDONLY, os.ModePerm)
+	defer file.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	reader := bufio.NewReader(file)
+	for {
+		line, isPrefix, err := reader.ReadLine()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Println(string(line), isPrefix)
+	}
+}
+
+// 9、读取目录
+func readDir() {
+	path, err := os.OpenFile("D:\\", os.O_RDONLY, os.ModePerm)
+	defer path.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// -1：获取所有目录项
+	infos, err := path.Readdir(-1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, info := range infos {
+		fmt.Println(info.Name(), info.IsDir())
+	}
+}
+
+// 10、递归读取目录
+func readDirRecursion(pathStr string) {
+	path, err := os.OpenFile(pathStr, os.O_RDONLY, os.ModePerm)
+	defer path.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	infos, err := path.Readdir(-1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, info := range infos {
+		if info.IsDir() {
+			readDirRecursion(pathStr + "\\" + info.Name())
+		}
+		fmt.Println(info.Name())
 	}
 }

@@ -6,7 +6,8 @@ import "fmt"
 func main() {
 	//pointerStrengthen()
 	//sliceStrengthen()
-	mapStrengthen()
+	//mapStrengthen()
+	structStrengthen()
 }
 
 // 1、指针加强
@@ -105,4 +106,19 @@ func mapStrengthen() {
 	} else {
 		fmt.Println("不存在")
 	}
+}
+
+type Person struct {
+	name string
+	age  int
+	addr string
+}
+
+// 4、结构体加强
+func structStrengthen() {
+	p1 := &Person{"test", 20, "test"}
+	fmt.Printf("&p1 = %p\n", p1)
+	fmt.Printf("&p1.name = %p\n", &p1.name)
+	fmt.Printf("&p1.age = %p\n", &p1.age)
+	fmt.Printf("&p1.addr = %p\n", &p1.addr)
 }
