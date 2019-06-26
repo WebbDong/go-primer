@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"time"
 )
 
 /*
@@ -18,9 +19,7 @@ func main() {
 	//goexit()
 	//gomaxprocs()
 	otherRuntimeFunc()
-	for {
-
-	}
+	time.Sleep(10 * time.Second)
 }
 
 func eat() {
