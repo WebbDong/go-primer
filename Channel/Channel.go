@@ -84,9 +84,7 @@ func channelCommunication() {
 	go printHello()
 	go printWorld()
 
-	for {
-
-	}
+	time.Sleep(10 * time.Second)
 }
 
 // 3、无缓冲Channel
@@ -105,9 +103,7 @@ func noCacheChannel() {
 		fmt.Println("主Go程读：", v)
 	}
 
-	for {
-
-	}
+	time.Sleep(10 * time.Second)
 }
 
 // 4、有缓冲Channel
@@ -125,7 +121,5 @@ func cacheChannel() {
 		v := <-ch
 		fmt.Println("主Go程读：", v)
 	}
-	for {
-
-	}
+	time.Sleep(10 * time.Second)
 }
