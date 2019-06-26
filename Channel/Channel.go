@@ -19,7 +19,9 @@ func main() {
 	//declareChannel()
 	//channelCommunication()
 	//noCacheChannel()
-	cacheChannel()
+	//cacheChannel()
+	//closeChannel()
+	forRangeChannel()
 }
 
 // 1、定义Channel
@@ -122,4 +124,50 @@ func cacheChannel() {
 		fmt.Println("主Go程读：", v)
 	}
 	time.Sleep(10 * time.Second)
+}
+
+// 5、关闭Channel，已经关闭的Channel不能再向它写数据，但是能读取已经关闭的Channel
+func closeChannel() {
+	ch := make(chan int, 10)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			ch <- i
+		}
+		// 关闭Channel
+		close(ch)
+	}()
+	time.Sleep(3 * time.Second)
+	for {
+		if v, ok := <-ch; ok {
+			fmt.Println("读到的值：", v)
+		} else {
+			v = <-ch
+			fmt.Println("Channel关闭")
+			fmt.Println("关闭后读取的值：", v)
+			break
+		}
+	}
+
+	time.Sleep(10 * time.Second)
+}
+
+// 6、for range遍历Channel
+func forRangeChannel() {
+	ch := make(chan int)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			ch <- i
+		}
+		close(ch)
+	}()
+
+	// for range能自动判断Channel是否已经关闭，如果已经关闭自动跳出循环
+	// 如果使用for range，没有进行Channel的关闭操作，那么将导致死锁异常
+	for v := range ch {
+		fmt.Println("读取到的值：", v)
+	}
+
+	time.Sleep(5 * time.Second)
 }
