@@ -21,7 +21,9 @@ func main() {
 	//noCacheChannel()
 	//cacheChannel()
 	//closeChannel()
-	forRangeChannel()
+	//forRangeChannel()
+	//unidirectionChannel()
+	channelParam()
 }
 
 // 1、定义Channel
@@ -170,4 +172,50 @@ func forRangeChannel() {
 	}
 
 	time.Sleep(5 * time.Second)
+}
+
+// 7、单向Channel
+func unidirectionChannel() {
+	/*
+		默认创建的Channel都是双向的
+		单向写Channel：var sendCh chan <- int = make(chan <- int)
+		单向读Channel：var recvCh <- chan int = make(<- chan int)
+
+		双向Channel可以隐式转换为任意一种单向Channel，单向Channel不能转换为双向Channel
+	*/
+
+	// 双向Channel
+	ch := make(chan int)
+	fmt.Println(ch)
+
+	// 单向写Channel
+	sendCh := make(chan<- int)
+	sendCh <- 125
+
+	// 单向读Channel
+	recvCh := make(<-chan int)
+	v := <-recvCh
+	fmt.Println(v)
+
+	// 双向Channel隐式转换成单向Channel
+	sendCh = ch
+	recvCh = ch
+}
+
+func send(ch chan<- int) {
+	ch <- 458
+	close(ch)
+}
+
+func recv(ch <-chan int) {
+	v := <-ch
+	fmt.Println("读取到的数据：", v)
+}
+
+// 8、channel作为函数参数
+func channelParam() {
+	ch := make(chan int)
+	go send(ch)
+	recv(ch)
+	time.Sleep(2 * time.Second)
 }
