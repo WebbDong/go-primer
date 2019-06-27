@@ -11,7 +11,8 @@ import (
 func main() {
 	//createTimer()
 	//stopTimer()
-	resetTimer()
+	//resetTimer()
+	ticker()
 }
 
 // 1、创建定时器
@@ -62,4 +63,28 @@ func resetTimer() {
 		fmt.Println("子Go程读取到的时间：", t)
 	}()
 	time.Sleep(8 * time.Second)
+}
+
+// 4、周期定时器
+func ticker() {
+	quit := make(chan bool)
+
+	// 每隔2秒执行一次
+	ticker := time.NewTicker(2 * time.Second)
+	go func() {
+		i := 0
+		for {
+			t := <-ticker.C
+			fmt.Println(t)
+			i++
+			if i == 5 {
+				// 停止ticker
+				ticker.Stop()
+				// 结束主Go程，子Go程也一起结束
+				quit <- true
+			}
+		}
+	}()
+
+	<-quit
 }
