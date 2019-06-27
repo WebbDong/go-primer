@@ -19,6 +19,7 @@ func consumers(ch <-chan int) {
 	for v := range ch {
 		fmt.Println("消费者读取：", v)
 	}
+	fmt.Println("Done!!!")
 }
 
 /*
