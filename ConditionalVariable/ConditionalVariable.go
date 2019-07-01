@@ -1,5 +1,12 @@
 package main
 
+import (
+	"fmt"
+	"math/rand"
+	"sync"
+	"time"
+)
+
 /*
 	条件变量，经常与锁结合使用
 
@@ -25,5 +32,54 @@ package main
 			给阻塞在该条件变量上的所有Go程发送唤醒通知
 */
 func main() {
+	// 条件变量实现生产者消费者模型
+	condProducersConsumers()
+}
 
+var cond sync.Cond
+
+func producers(w chan<- int, i int) {
+	for {
+		cond.L.Lock()
+		// 当缓冲区满了，将生产者Go程Wait
+		for len(w) == 3 {
+			cond.Wait()
+		}
+		num := rand.Intn(1000)
+		fmt.Printf("Thread%d写入数据：%d\n", i, num)
+		w <- num
+		cond.L.Unlock()
+		cond.Signal() // 唤醒消费者等待的一个线程
+	}
+}
+
+func consumers(r <-chan int, i int) {
+	for {
+		cond.L.Lock()
+		// 当缓冲区没有数据可以获取时，将消费者Go程Wait
+		for len(r) == 0 {
+			cond.Wait()
+		}
+		num := <-r
+		fmt.Printf("---Thread%d读取数据：%d\n", i, num)
+		cond.L.Unlock()
+		cond.Signal() // 唤醒生产者等待的一个线程
+	}
+}
+
+// 条件变量实现生产者消费者模型
+func condProducersConsumers() {
+	ch := make(chan int, 3)
+	// 设置锁为互斥锁
+	cond.L = new(sync.Mutex)
+
+	for i := 0; i < 5; i++ {
+		go producers(ch, i)
+	}
+
+	for i := 0; i < 3; i++ {
+		go consumers(ch, i)
+	}
+
+	time.Sleep(10 * time.Second)
 }
