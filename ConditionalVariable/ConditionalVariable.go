@@ -43,6 +43,7 @@ func producers(w chan<- int, i int) {
 		cond.L.Lock()
 		// 当缓冲区满了，将生产者Go程Wait
 		for len(w) == 3 {
+			fmt.Printf("写Thread%dWait\n", i)
 			cond.Wait()
 		}
 		num := rand.Intn(1000)
@@ -58,6 +59,7 @@ func consumers(r <-chan int, i int) {
 		cond.L.Lock()
 		// 当缓冲区没有数据可以获取时，将消费者Go程Wait
 		for len(r) == 0 {
+			fmt.Printf("读Thread%dWait\n", i)
 			cond.Wait()
 		}
 		num := <-r
@@ -81,5 +83,5 @@ func condProducersConsumers() {
 		go consumers(ch, i)
 	}
 
-	time.Sleep(10 * time.Second)
+	time.Sleep(time.Hour * 2)
 }
