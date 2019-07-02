@@ -50,7 +50,7 @@ func producers(w chan<- int, i int) {
 		fmt.Printf("Thread%d写入数据：%d\n", i, num)
 		w <- num
 		cond.L.Unlock()
-		cond.Signal() // 唤醒消费者等待的一个线程
+		cond.Signal() // 唤醒任意等待的一个Go程
 	}
 }
 
@@ -65,7 +65,7 @@ func consumers(r <-chan int, i int) {
 		num := <-r
 		fmt.Printf("---Thread%d读取数据：%d\n", i, num)
 		cond.L.Unlock()
-		cond.Signal() // 唤醒生产者等待的一个线程
+		cond.Signal() // 唤醒任意等待的一个Go程
 	}
 }
 
@@ -75,11 +75,12 @@ func condProducersConsumers() {
 	// 设置锁为互斥锁
 	cond.L = new(sync.Mutex)
 
-	for i := 0; i < 5; i++ {
+	// 当生产者与消费者Go程数量不一致且相差比较大时，还有一定概率出现死锁情况
+	for i := 0; i < 3; i++ {
 		go producers(ch, i)
 	}
 
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 10; i++ {
 		go consumers(ch, i)
 	}
 
