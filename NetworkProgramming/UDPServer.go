@@ -12,23 +12,34 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	conn, err := net.ListenUDP("udp", addr)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer conn.Close()
 
-	buf := make([]byte, 4096)
-	// 返回值：1、读到的字节数，2：客户端的地址，3：error
-	count, udpAddr, err := conn.ReadFromUDP(buf)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println("count =", count)
-	fmt.Println("udpAddr =", udpAddr)
-	fmt.Println("读取到的数据：", string(buf))
+	for {
+		conn, err := net.ListenUDP("udp", addr)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 
-	conn.WriteToUDP([]byte("Hello World"), udpAddr)
+		// 返回值：1、读到的字节数，2：客户端的地址，3：error
+		for {
+			buf := make([]byte, 4096)
+			count, udpAddr, err := conn.ReadFromUDP(buf)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			data := string(buf)
+			fmt.Println("count =", count)
+			fmt.Println("udpAddr =", udpAddr)
+			fmt.Println("读取到的数据：", data)
+			if "exit" == data {
+				conn.Close()
+			}
+			if "quit" == data {
+				conn.Close()
+				return
+			}
+			conn.WriteToUDP([]byte("Hello World"), udpAddr)
+		}
+	}
 }

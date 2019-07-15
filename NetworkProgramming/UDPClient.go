@@ -13,7 +13,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	conn.Write([]byte("Fuck you"))
+	conn.Write([]byte("exit"))
 
 	buf := make([]byte, 4096)
 	n, err := conn.Read(buf)
