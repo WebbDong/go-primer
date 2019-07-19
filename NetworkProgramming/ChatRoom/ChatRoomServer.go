@@ -5,17 +5,24 @@ import (
 	"net"
 )
 
+// 客户
 type Client struct {
 	name       string
 	addr       string
-	msgChannel chan string
+	msgChannel chan Message
+}
+
+// 消息
+type Message struct {
+	senderAddr string
+	msgContent string
 }
 
 // 在线用户map
 var onlineClientMap map[string]Client
 
 // 消息channel
-var commonMsgChannel chan string
+var commonMsgChannel chan Message
 
 // 聊天室服务器
 func main() {
@@ -41,15 +48,18 @@ func main() {
 // 初始化
 func init() {
 	onlineClientMap = make(map[string]Client)
-	commonMsgChannel = make(chan string)
+	commonMsgChannel = make(chan Message)
 }
 
 // 处理连接
 func handleConn(conn net.Conn) {
 	defer conn.Close()
 	addr := conn.RemoteAddr().String()
-	client := Client{addr, addr, make(chan string)}
+	client := Client{addr, addr, make(chan Message)}
 	onlineClientMap[addr] = client
+
+	go handleClientMsgChannel(conn, client.msgChannel)
+
 	for {
 		buf := make([]byte, 2048)
 		n, err := conn.Read(buf)
@@ -57,7 +67,19 @@ func handleConn(conn net.Conn) {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println(string(buf[:n]))
+		data := string(buf[:n])
+		msg := Message{client.addr, data}
+		fmt.Println(msg)
+		commonMsgChannel <- msg
+	}
+}
+
+// 处理客户消息channel
+func handleClientMsgChannel(conn net.Conn, msgChannel chan Message) {
+	for {
+		msg := <-msgChannel
+		content := msg.senderAddr + ":" + msg.msgContent
+		conn.Write([]byte(content))
 	}
 }
 
@@ -66,7 +88,9 @@ func manager() {
 	for {
 		msg := <-commonMsgChannel
 		for _, v := range onlineClientMap {
-			v.msgChannel <- msg
+			if msg.senderAddr != v.addr {
+				v.msgChannel <- msg
+			}
 		}
 	}
 }
