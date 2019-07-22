@@ -65,7 +65,7 @@ func handleConn(conn net.Conn) {
 		n, err := conn.Read(buf)
 		if err != nil {
 			fmt.Println(err)
-			continue
+			return
 		}
 		data := string(buf[:n])
 		msg := Message{client.addr, data}
