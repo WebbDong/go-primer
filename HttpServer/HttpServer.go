@@ -16,6 +16,7 @@ func main() {
 func httpHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Write([]byte("Hello World"))
 
+	fmt.Println("request.URL:", request.URL)
 	fmt.Println("request.Header:", request.Header)
 	fmt.Println("request.RemoteAddr:", request.RemoteAddr)
 	fmt.Println("request.Method:", request.Method)
