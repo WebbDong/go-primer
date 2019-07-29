@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 // http服务器
 func main() {
@@ -12,4 +15,11 @@ func main() {
 
 func httpHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Write([]byte("Hello World"))
+
+	fmt.Println("request.Header:", request.Header)
+	fmt.Println("request.RemoteAddr:", request.RemoteAddr)
+	fmt.Println("request.Method:", request.Method)
+	fmt.Println("request.Body:", request.Body)
+	fmt.Println("request.Close:", request.Close)
+	fmt.Println("request.Host:", request.Host)
 }
