@@ -15,7 +15,8 @@ func main() {
 	//replace()
 	//split()
 	//stringConvert()
-	substring()
+	//substring()
+	nativeString()
 }
 
 // 1、Contains方法，判断第一个参数的字符串是否包含第二个参数的字符串
@@ -118,8 +119,15 @@ func stringConvert() {
 // 8、截取子串
 func substring() {
 	str1 := "Lamborghini"
-	fmt.Println(str1[1: 5])
+	fmt.Println(str1[1:5])
 
 	str2 := "img\\abc.jpg"
 	fmt.Println(str2[0:strings.LastIndex(str2, "\\")])
+}
+
+// 9、原生字符串,该类字符串使用反引号（注意：不是单引号）括起来，支持换行
+func nativeString() {
+	// 原生字符串中的 \n 会被原样输出
+	str1 := `ferrari\n`
+	fmt.Println(str1)
 }
