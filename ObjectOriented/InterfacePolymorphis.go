@@ -10,7 +10,8 @@ func main() {
 	//polymorphis()
 	//interfaceExtends()
 	//emptyInterface()
-	typeAssert()
+	//typeAssert()
+	interfaceFuncParam()
 }
 
 // 接口
@@ -28,11 +29,11 @@ type Human struct {
 }
 
 func (h *Human) Walk() {
-	fmt.Println("走路")
+	fmt.Println(h.name, "走路")
 }
 
 func (h *Human) Run() {
-	fmt.Printf("跑步")
+	fmt.Println(h.name, "跑步")
 }
 
 func (h *Human) Speak() {
@@ -213,4 +214,16 @@ func typeAssert() {
 	default:
 		fmt.Println("类型错误，", v)
 	}
+}
+
+// 6、使用接口作为函数参数
+func f1(p Personer) {
+	// 对接口变量进行修改，不会影响原变量
+	p = &SoftwareEngineer{Human: Human{name: "Yao"}, progLang: "Java"}
+}
+
+func interfaceFuncParam() {
+	var p Personer = &RacingDriver{Human: Human{name: "Kobe"}, speed: 40}
+	f1(p)
+	fmt.Println(p)
 }
