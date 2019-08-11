@@ -31,14 +31,14 @@ func test1() {
 	createDir(OUTPUT_PATH)
 	for i, len := 0, len(infos); i < len; i++ {
 		info := infos[i]
-		if !info.IsDir() && strings.HasSuffix(strings.ToLower(info.Name()), ".gif") {
+		if !info.IsDir() && strings.HasSuffix(strings.ToLower(info.Name()), ".mp3") {
 			filePath := BASE_PATH + info.Name()
 			totalData, err := readFile(filePath)
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
-			newFilePath := OUTPUT_PATH + fmt.Sprintf("%d.gif", i+1)
+			newFilePath := OUTPUT_PATH + fmt.Sprintf("%d.mp3", i+1)
 			writeFile(newFilePath, totalData)
 		}
 	}
