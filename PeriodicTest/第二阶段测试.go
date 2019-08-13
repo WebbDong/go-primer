@@ -3,15 +3,18 @@ package main
 import (
 	"fmt"
 	"io"
+	"net"
 	"os"
 	"strings"
 )
 
 // 第二阶段测试
 func main() {
-	test1()
+	//test1()
+	test2()
 }
 
+// ------------------------------------------------------ start ----------------------------------------------------
 const BASE_PATH = "C:\\a\\"
 const OUTPUT_PATH = "C:\\b\\"
 
@@ -100,3 +103,74 @@ func readFile(filePath string) (totalData []byte, err error) {
 	}
 	return
 }
+
+// ------------------------------------------------------ end ----------------------------------------------------
+
+// ------------------------------------------------------ start ----------------------------------------------------
+func test2() {
+	listener, err := net.Listen("tcp", "127.0.0.1:8000")
+	defer listener.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println("客户端连接成功。。。")
+
+		go handleTCPConnect(conn)
+	}
+}
+
+func handleTCPConnect(conn net.Conn) {
+	for {
+		datas, err := readStringFromConn(conn)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		str := string(datas)
+		if str == "quit" {
+			conn.Close()
+			return
+		}
+		fmt.Println("读取到：" + str)
+		conn.Write([]byte(reverse(str)))
+	}
+}
+
+func readStringFromConn(conn net.Conn) ([]byte, error) {
+	const BUF_SIZE = 4096
+	buf := make([]byte, BUF_SIZE)
+	n, e := conn.Read(buf)
+	if e != nil && e != io.EOF {
+		return nil, e
+	}
+	return buf[:n], nil
+}
+
+func reverse(str string) string {
+	splits := strings.Split(str, " ")
+	var newStr string
+	for i := len(splits) - 1; i >= 0; i-- {
+		newStr += splits[i]
+		if i != 0 {
+			newStr += " "
+		}
+	}
+	return newStr
+}
+
+func reverseString(str string) string {
+	runes := []rune(str)
+	for from, to := 0, len(runes)-1; from < to; from, to = from+1, to-1 {
+		runes[from], runes[to] = runes[to], runes[from]
+	}
+	return string(runes)
+}
+
+// ------------------------------------------------------ end ----------------------------------------------------
