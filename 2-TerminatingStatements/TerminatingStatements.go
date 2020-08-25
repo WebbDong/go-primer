@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	ifAndSwitch()
-	//for_()
+	//ifAndSwitch()
+	forLoop()
 }
 
 func ifAndSwitch() {
@@ -114,7 +114,7 @@ func ifAndSwitch() {
 	}
 }
 
-func for_() {
+func forLoop() {
 	var index int
 	for index = 0; index < 10; index++ {
 
@@ -149,10 +149,10 @@ func for_() {
 	for i := 0; true; i++ {
 		if i == 100 {
 			fmt.Println("i =", i)
-			goto BREAK_LOOP
+			goto BreakLoop
 		}
 	}
-BREAK_LOOP:
+BreakLoop:
 	fmt.Println("BREAK_LOOP")
 
 	arr := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

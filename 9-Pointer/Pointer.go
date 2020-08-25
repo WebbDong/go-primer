@@ -7,14 +7,14 @@ import (
 
 // 指针
 func main() {
-	pointerDef()
+	//pointerDef()
 	//pointerParam()
 	//arrayPointer()
 	//arrayPointerParam()
 	//pointerArray()
 	//slicePointer()
 	//structPointer()
-	//multilevelPointer()
+	multilevelPointer()
 }
 
 // 指针定义
@@ -99,9 +99,9 @@ func arrayPointer() {
 	fmt.Println("-------------------------")
 
 	for i := 0; i < len(pa3); i++ {
-		fmt.Print(pa3[i], ",")
+		fmt.Print(pa3[i], " ")
 	}
-	fmt.Println("-------------------------")
+	fmt.Println("\n-------------------------")
 }
 
 func funcTest2(pa *[7]int) {
