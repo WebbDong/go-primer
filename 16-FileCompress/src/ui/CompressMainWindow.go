@@ -56,6 +56,11 @@ func (c *CompressMainWindow) Show() {
 			obComposite,
 		},
 	}.Create()
+
+	if err != nil {
+		panic(err)
+	}
+
 	fileChooseComposite.mainWindow = c.MainWindow
 	/*
 		_, err := MainWindow{
@@ -69,9 +74,6 @@ func (c *CompressMainWindow) Show() {
 		}.Run()
 	*/
 	c.Run()
-	if err != nil {
-		fmt.Println(err)
-	}
 }
 
 // 打开文件选择框
