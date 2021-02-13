@@ -5,7 +5,8 @@ import "fmt"
 func main() {
 	s := []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
 	//bubbleSort(s)
-	selectionSort(s)
+	// selectionSort(s)
+	mergeSort(s)
 	fmt.Println(s)
 }
 
@@ -33,5 +34,45 @@ func selectionSort(s []int) {
 			}
 		}
 		s[i], s[minIndex] = s[minIndex], s[i]
+	}
+}
+
+var temp []int
+
+// 归并排序
+func mergeSort(s []int) {
+	temp = make([]int, len(s)>>1)
+	divide(s, 0, len(s))
+}
+
+func divide(s []int, b int, e int) {
+	if e-b < 2 {
+		return
+	}
+
+	m := (b + e) >> 1
+	divide(s, b, m)
+	divide(s, m, e)
+	merge(s, b, m, e)
+}
+
+func merge(s []int, b int, m int, e int) {
+	le := m - b
+	re := e
+	li, ri, ai := 0, m, b
+
+	for i := 0; i < le; i++ {
+		temp[i] = s[b+i]
+	}
+
+	for li < le {
+		if ri < re && s[ri] < temp[li] {
+			s[ai] = s[ri]
+			ri++
+		} else {
+			s[ai] = temp[li]
+			li++
+		}
+		ai++
 	}
 }
