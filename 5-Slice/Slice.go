@@ -14,7 +14,7 @@ type slice struct {
 }
 */
 func main() {
-	//slice()
+	slice()
 	//sliceInit()
 	//sliceLoop()
 	//sliceCutOut()
@@ -23,19 +23,22 @@ func main() {
 	//copyFunc()
 	//sliceParam()
 	//sliceParamAppend()
-	removeSliceElement()
+	//removeSliceElement()
 }
 
 // 切片创建
 func slice() {
-	// 空切片
+	// 空切片，值为 nil
 	var s1 []int
 	fmt.Println(s1)
+	fmt.Println("s1 == nil : ", s1 == nil)
 	fmt.Printf("%T\n", s1)
 	fmt.Println(len(s1))
 
+	// 一个 len 为0，cap 为0的空切片，值不为 nil
 	s2 := []int{}
 	fmt.Println(s2)
+	fmt.Println("s2 == nil : ", s2 == nil)
 
 	var s3 = []int{1, 2, 3, 4, 5}
 	fmt.Println(s3)
