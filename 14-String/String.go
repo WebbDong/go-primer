@@ -16,7 +16,8 @@ func main() {
 	//split()
 	//stringConvert()
 	//substring()
-	nativeString()
+	// nativeString()
+	concat()
 }
 
 // 1、Contains方法，判断第一个参数的字符串是否包含第二个参数的字符串
@@ -130,4 +131,15 @@ func nativeString() {
 	// 原生字符串中的 \n 会被原样输出
 	str1 := `ferrari\n`
 	fmt.Println(str1)
+}
+
+// 10、字符串拼接
+func concat() {
+	str1 := "Lamborghini"
+	str2 := " LP700"
+	str3 := str1 + str2
+	fmt.Println(str3)
+
+	str3 += " Ferrari"
+	fmt.Println(str3)
 }
