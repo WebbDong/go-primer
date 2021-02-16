@@ -6,13 +6,13 @@ type People struct {
 }
 
 func (p *People) ShowA() {
-	fmt.Println("showA")
-	// 调用的始终是People的showA，不管创建的对象是否是子类，与java等其他语言不同
+	fmt.Println("People showA")
+	// 调用的始终是People的showB，不管创建的对象是否是子类，与java等其他语言不同
 	p.ShowB()
 }
 
 func (p *People) ShowB() {
-	fmt.Println("showB")
+	fmt.Println("People showB")
 }
 
 type Professor struct {
