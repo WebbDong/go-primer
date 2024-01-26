@@ -31,10 +31,6 @@ func array() {
 	arr7[4] = 3000
 	fmt.Println(arr7)
 
-	var arr8 = []int{10, 20, 30, 40}
-	fmt.Println(arr8)
-	fmt.Printf("len(arr8) = %d\n", len(arr8))
-
 	for i := 0; i < len(arr5); i++ {
 		fmt.Print(arr5[i], ",")
 	}
